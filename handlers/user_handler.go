@@ -32,7 +32,12 @@ func RegisterUser(service services.UserAuthService) http.HandlerFunc {
 		}
 		req.DOB = dob
 
-		// add contract validation here
+		// validate contract
+		errs := req.Validate()
+		if len(errs) > 0 {
+			http.Error(w, "invalid phone number", http.StatusBadRequest)
+			return
+		}
 
 		// pass the request to service layer
 		err = service.RegisterUser(ctx, req)
