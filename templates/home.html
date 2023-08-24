@@ -13,12 +13,12 @@
 </head>
 <body>
     <h1>Registration / Sign In Form</h1>
-    <form id="registrationForm" action="#" method="post" enctype="multipart/form-data">
+    <form id="registrationForm" action="http://localhost:8000/auth/register" method="post" enctype="multipart/form-data">
         <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" name="firstName" required><br>
+        <input type="text" id="firstName" name="first_name" required><br>
         
         <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" name="lastName" required><br>
+        <input type="text" id="lastName" name="last_name" required><br>
         
         <label for="dob">Date of Birth:</label>
         <input type="date" id="dob" name="dob" required><br>
@@ -27,7 +27,7 @@
         <input type="email" id="email" name="email" required><br>
         
         <label for="phone">Phone Number:</label>
-        <input type="tel" id="phone" name="phone"><br>
+        <input type="tel" id="phone" name="phone_number"><br>
         
         <label for="cv">Upload CV (PDF or DOC):</label>
         <input type="file" id="cv" name="cv" accept=".pdf, .doc, .docx" required><br>
@@ -43,7 +43,7 @@
         event.preventDefault();
 
         // Your API endpoint
-        const apiUrl = "http://localhost:8000/register";
+        const apiUrl = "http://localhost:8000/auth/register";
 
         const dobInput = document.getElementById("dob");
         const dob = new Date(dobInput.value);
