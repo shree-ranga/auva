@@ -3,7 +3,7 @@ package repo
 import (
 	"auva/domains"
 	"context"
-	"fmt"
+	"log"
 	"time"
 
 	"github.com/edgedb/edgedb-go"
@@ -24,10 +24,9 @@ func NewAuthRepo(db *edgedb.Client) UserAuthRepo {
 }
 
 func (s *userAuthRepo) Insert(ctx context.Context, model domains.User) error {
-	fmt.Println(model)
 	dob := time.Date(model.DOB.Year(), model.DOB.Month(), model.DOB.Day(), 0, 0, 0, 0, time.UTC)
-
-	return s.db.QuerySingle(ctx, `INSERT User {
+	var inserted struct{ id edgedb.UUID }
+	err := s.db.QuerySingle(ctx, `INSERT User {
 		first_name := <str>$0,
 		last_name := <str>$1,
 		date_of_birth := <datetime>$2,
@@ -36,5 +35,10 @@ func (s *userAuthRepo) Insert(ctx context.Context, model domains.User) error {
 			number := <str>$4
 		}),
 		cv_file_path := <str>$5
-	};`, model.FirstName, model.LastName, dob, model.Email, model.Phone.Number, model.CVPath)
+	};`, &inserted, model.FirstName, model.LastName, dob, model.Email, model.Phone.Number, model.CVPath)
+
+	if err != nil {
+		log.Fatal("error inserting the data", err.Error())
+	}
+	return err
 }
