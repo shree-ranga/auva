@@ -7,3 +7,9 @@ func MainPageHandler() http.HandlerFunc {
 		http.ServeFile(w, r, "templates/home.html")
 	}
 }
+
+func SubmittedPageHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "templates/submitted.html")
+	}
+}
