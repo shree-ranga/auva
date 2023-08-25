@@ -26,8 +26,8 @@ func (r *RegisterUserRequest) Validate() url.Values {
 
 	// Validate phone number length
 	// assuming india is the only country
-	if len(r.Phone) > 10 {
-		err.Add("phone_number", "Phone number should not exceed 10 digits")
+	if len(r.Phone) != 10 {
+		err.Add("phone_number", "Phone number must be 10 digits")
 	}
 	return err
 }
